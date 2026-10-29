@@ -1,7 +1,7 @@
 # Shared phase-1 config — MUST stay identical on head node and worker node
 # Image: local overlay v4 = sglang 0.5.22 base (lmsysorg/sglang@sha256:e3a4f06…) + GB10
 # patches: tilelang smem retune + pin-memory env gate + fastsafetensors pkg + FSTS
-# world-rank->local-device fix. Build: ~/glm53-sglang/patches (Dockerfile.sm121).
+# world-rank->local-device fix. Build: ~/glm53-dgx-spark/patches (Dockerfile.sm121).
 IMAGE=glm53-sglang:sm121
 BASE_IMAGE_DIGEST=sha256:e3a4f06001a29542fc4a8638536d9ffc5eb9c9942b08603c09b19a56eae4a1ae
 MODEL_ID=nvidia/GLM-5.3-Flash-NVFP4

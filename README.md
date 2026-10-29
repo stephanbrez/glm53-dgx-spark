@@ -21,10 +21,17 @@
   (`lmsysorg/sglang@sha256:e3a4f06001a29542fc4a8638536d9ffc5eb9c9942b08603c09b19a56eae4a1ae`)
   — no sglang fork needed.
 
+## Get the recipe (both nodes)
+
+```bash
+git clone https://github.com/stephanbrez/glm53-dgx-spark.git
+cd glm53-dgx-spark
+```
+
 ## Build the overlay (both nodes, identical)
 
 ```bash
-cd ~/glm53-sglang/patches
+cd ~/glm53-dgx-spark/patches
 docker build -f Dockerfile.sm121 -t glm53-sglang:sm121 .
 ```
 
@@ -49,9 +56,9 @@ Four patches on top of the pinned base (all in `patches/`):
 Both nodes source the shared `ENV`; scripts are worker-first:
 
 ```bash
-bash ~/glm53-sglang/launch-worker.sh   # worker, ~25 s
-bash ~/glm53-sglang/launch-head.sh     # head; serving starts here
-bash ~/glm53-sglang/watch_boot.sh      # optional: watch the boot
+bash ~/glm53-dgx-spark/launch-worker.sh   # worker, ~25 s
+bash ~/glm53-dgx-spark/launch-head.sh     # head; serving starts here
+bash ~/glm53-dgx-spark/watch_boot.sh      # optional: watch the boot
 ```
 
 `ENV` pins: image + digest, model id, head/worker IPs (10.20.0.11/12),
@@ -68,7 +75,7 @@ port 30000 / dist port 29500, and the serving flags:
   `NCCL_CUMEM_ENABLE=0`, `NCCL_NVLS_ENABLE=0`, `SGLANG_HOST_IP` per rank.
 
 First boot ≈ **5.6 min** (85 s GPU-direct load + JIT + CUDA graphs).
-Caches persist under `~/glm53-sglang/cache/` for faster restarts.
+Caches persist under `~/glm53-dgx-spark/cache/` for faster restarts.
 
 ## Verify the deployment
 

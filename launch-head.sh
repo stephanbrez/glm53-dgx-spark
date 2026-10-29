@@ -1,6 +1,6 @@
 #!/bin/bash
 # Phase-1 sglang bring-up: GLM-5.3-Flash-NVFP4, TP=2 across head node(head)+worker node(worker).
-# ORDER: start the worker on worker node first (bash ~/glm53-sglang/launch-worker.sh),
+# ORDER: start the worker on worker node first (bash ~/glm53-dgx-spark/launch-worker.sh),
 #        then run this script on head node. Health: http://head node:30000/health
 # Prereqs: vLLM stack STOPPED; desktop sessions stopped; checkpoint downloaded.
 # v4/v5 notes: mem-fraction + mamba pins, SGLANG_DISABLE_PIN_MEMORY, FSTS loader (ENV).
@@ -20,7 +20,7 @@ if ! echo 3 | sudo -n tee /proc/sys/vm/drop_caches >/dev/null 2>&1; then
   echo "note: drop_caches skipped (sudo not passwordless); watch free mem on first boot"
 fi
 
-mkdir -p "$HOME/glm53-sglang/cache/triton" "$HOME/glm53-sglang/cache/flashinfer"
+mkdir -p "$HOME/glm53-dgx-spark/cache/triton" "$HOME/glm53-dgx-spark/cache/flashinfer"
 docker rm -f "$NAME" 2>/dev/null || true
 
 docker run -d --name "$NAME" \
@@ -50,8 +50,8 @@ docker run -d --name "$NAME" \
   -e MALLOC_ARENA_MAX=2 \
   -e HF_HUB_OFFLINE=1 \
   -v "$HOME/.cache/huggingface:/root/.cache/huggingface" \
-  -v "$HOME/glm53-sglang/cache/triton:/root/.triton" \
-  -v "$HOME/glm53-sglang/cache/flashinfer:/root/.cache/flashinfer" \
+  -v "$HOME/glm53-dgx-spark/cache/triton:/root/.triton" \
+  -v "$HOME/glm53-dgx-spark/cache/flashinfer:/root/.cache/flashinfer" \
   "$IMAGE" \
   sglang serve \
     --model-path "$MODEL_ID" \
