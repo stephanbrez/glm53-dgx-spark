@@ -1,0 +1,16 @@
+FROM lmsysorg/sglang@sha256:e3a4f06001a29542fc4a8638536d9ffc5eb9c9942b08603c09b19a56eae4a1ae
+# GB10 (sm_121) fixes, ported onto sglang 0.5.22:
+# 0. fastsafetensors for the GPU-direct weight loader: the default loader's host-side
+#    staging (~19% of checkpoint) + ~95GB/rank device weights exceed the 121.8GB UMA
+#    host (global OOM at end-of-load).
+# 1. tilelang DSA smem retune (beastllama recipe): block_I 64->32, num_stages 2->1,
+#    threads 256/384->128 (needs ~202KB -> fits 101,376B opt-in). Param-only port.
+# 2. Env-gated pin-memory disable (SGLANG_DISABLE_PIN_MEMORY=1): pinned staging waste
+#    on unified memory. Default unchanged when env is unset.
+# 3. fastsafetensors device-ordinal fix: world rank -> LOCAL cuda ordinal
+#    (rank % device_count) so cross-node 1-GPU-per-node (2x GB10, nnodes=2 tp=2)
+#    doesn't ask rank 1 for cuda:1 (invalid device ordinal).
+RUN pip install --no-cache-dir fastsafetensors
+COPY tilelang_kernel.sm121.py /sgl-workspace/sglang/python/sglang/kernels/ops/attention/dsa/tilelang_kernel.py
+COPY cuda.py.sm121.py /sgl-workspace/sglang/python/sglang/srt/platforms/cuda.py
+COPY weight_utils.sm121.py /sgl-workspace/sglang/python/sglang/srt/model_loader/weight_utils.py
