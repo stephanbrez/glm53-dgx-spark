@@ -136,9 +136,9 @@ hardware class).
 
 ## Credits / prior art
 
-- beastllama's `GLM-5.3-Flash-DFlash2-SGLang-2x-DGX-Spark` (tilelang
-  retune, memory law), tonyd2wild's GB10 forensics + 2x-Spark vLLM
-  recipes, eugr's spark-vllm-docker (fabric/NCCL, fastsafetensors), sglang
-  issues #11658, #39302, #40286, SGLang cookbook, NVIDIA DGX Spark
-  playbook.
-- Checkpoint: `nvidia/GLM-5.3-Flash-NVFP4` (MIT). This recipe: MIT.
+- [beastllama/GLM-5.3-Flash-DFlash2-SGLang-2x-DGX-Spark](https://github.com/beastllama/GLM-5.3-Flash-DFlash2-SGLang-2x-DGX-Spark) — the tilelang retune and memory law this overlay builds on.
+- [tonyd2wild](https://github.com/tonyd2wild) — GB10 forensics and 2x-Spark vLLM recipes, incl. [GLM-5.3 at TP4 on 4x Spark](https://github.com/tonyd2wild/GLM-5.3-Int4-Int8Mix-TP4-4x-DGX-Spark).
+- [eugr/spark-vllm-docker](https://github.com/eugr/spark-vllm-docker) — fabric/NCCL recipe, fastsafetensors lineage.
+- SGLang issues [#11658](https://github.com/lmsysorg/sglang/issues/11658), [#39302](https://github.com/lmsysorg/sglang/issues/39302), [#40286](https://github.com/lmsysorg/sglang/issues/40286) — sm121 DSA kernel crash reports.
+- [SGLang cookbook](https://github.com/sgl-project/sgl-cookbook), [NVIDIA DGX Spark playbook](https://github.com/NVIDIA/dgx-spark-playbooks).
+- Checkpoint: [nvidia/GLM-5.3-Flash-NVFP4](https://huggingface.co/nvidia/GLM-5.3-Flash-NVFP4) (MIT). This recipe: MIT.
