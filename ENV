@@ -1,0 +1,25 @@
+# Shared phase-1 config — MUST stay identical on head node and worker node
+# Image: local overlay v4 = sglang 0.5.22 base (lmsysorg/sglang@sha256:e3a4f06…) + GB10
+# patches: tilelang smem retune + pin-memory env gate + fastsafetensors pkg + FSTS
+# world-rank->local-device fix. Build: ~/glm53-sglang/patches (Dockerfile.sm121).
+IMAGE=glm53-sglang:sm121
+BASE_IMAGE_DIGEST=sha256:e3a4f06001a29542fc4a8638536d9ffc5eb9c9942b08603c09b19a56eae4a1ae
+MODEL_ID=nvidia/GLM-5.3-Flash-NVFP4
+SERVED_NAME=glm-5.3-flash
+HEAD_IP=10.20.0.11
+WORKER_IP=10.20.0.12
+PORT=30000
+DIST_PORT=29500
+ETH_IF=enp1s0f0np0
+IB_IF=rocep1s0f0,roceP2p1s0f0
+# PRODUCTION (verified, 21/21 gates): 131K ctx, 0.87 (weights+baseline=0.824),
+# mamba 40, no speculation.
+CTX=131072
+MEMFRAC=0.87
+KV_DTYPE=bfloat16
+DSA_PREFILL=tilelang
+DSA_DECODE=tilelang
+MOE_BACKEND=flashinfer_cutlass
+MAX_REQ=8
+CHUNKED_PREFILL=4096
+EXTRA_ARGS='--load-format fastsafetensors --model-loader-extra-config {"enable_gds":false}'
