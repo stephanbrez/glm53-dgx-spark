@@ -44,27 +44,29 @@ Four patches on top of the pinned base (all in `patches/`):
    single-node; 1-GPU-per-node must use `rank % device_count`, else
    `torch.AcceleratorError: invalid device ordinal` on the worker.
 
-## GB10 memory rules (required config)
+## Lessons learned
 
-1. **Weights are real host RAM but invisible to container accounting.**
-   ~95 GB/rank of device-resident weights are charged outside any container
-   memcg. Container `--memory` caps are unreliable for this workload; keep
-   ~10 GB of the 121.8 GB free.
-2. **Use `--load-format fastsafetensors` (GPU-direct).** The default
-   loader stages ≈19% of the checkpoint (BF16 attention/shared-expert
-   part) in host RAM on top of the 95 GB of weights — guaranteed host OOM
-   at each rank's end-of-load. GPU-direct loads 95 GB in ~85 s with a flat
-   host footprint.
-3. **Kill desktop sessions before serving.** GDM costs 4–8 GB and is the
-   preferred OOM victim: `sudo systemctl stop gdm` on both nodes.
-4. **mem-fraction arithmetic:** weights+baseline = **0.824** of
-   124,544 MiB; `--mem-fraction-static 0.87` leaves ~5.7 GB for KV +
-   mamba pools (fits 131K context). Steady host state ≈ 112 GB of 121.8.
+1. **Device weights are charged as host RAM outside container accounting.**
+   ~95 GB/rank shows in host memory but in no container memcg, so
+   `--memory` caps are nearly meaningless here. Keep ~10 GB of the
+   121.8 GB free.
+2. **The default weight loader OOMs the host at end-of-load.** It stages
+   ~19% of the checkpoint (the bf16 attention / shared-expert part) on
+   top of the 95 GB of weights. `--load-format fastsafetensors` loads
+   GPU-direct: 95 GB in ~85 s, flat host footprint.
+3. **Desktop sessions are OOM bait.** GDM costs 4–8 GB and is the
+   preferred victim. `sudo systemctl stop gdm` on both nodes before
+   serving.
+4. **mem-fraction math:** weights+baseline = **0.824** of 124,544 MiB;
+   `--mem-fraction-static 0.87` leaves ~5.7 GB for KV + mamba pools
+   (fits 131K context). Steady host state ≈ 112 GB of 121.8.
 5. **Keep the default `--mamba-ssm-dtype`.** `bfloat16` breaks the KDA
    prefill kernel on 0.5.22 (`kda_prefill_graph_track.py` cannot unify
    bf16/fp32 in the `val` branch).
-6. **`--num-gpus` is not a `sglang serve` flag** — it belongs to another
-   launcher. Cross-node sizing is TP only.
+6. **The chat template thinks always.** `ReasoningToggle
+   special_case='always'` — `chat_template_kwargs {"thinking": false}`
+   is ignored on this route. Budget 2048+ reasoning tokens for code
+   prompts, or parse `reasoning_content` and `content` separately.
 
 ## Launch (worker first)
 
@@ -91,14 +93,6 @@ port 30000 / dist port 29500, and the serving flags:
 
 First boot ≈ **5.6 min** (85 s GPU-direct load + JIT + CUDA graphs).
 Caches persist under `~/glm53-sglang/cache/` for faster restarts.
-
-## Serving gotcha
-
-- **The checkpoint's chat template thinks ALWAYS** (`ReasoningToggle
-  special_case='always'`; `chat_template_kwargs {"thinking": false}` is
-  ignored on this route). Long prompts can spend the whole token budget on
-  `reasoning_content` and return empty `content`. Budget 2048+ reasons for
-  code prompts, or parse both fields.
 
 ## Verify the deployment
 
