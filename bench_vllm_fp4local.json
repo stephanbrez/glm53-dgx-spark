@@ -1,0 +1,264 @@
+{
+  "url": "http://127.0.0.1:8000",
+  "model": "nvidia/GLM-5.3-Flash-FP4-Local",
+  "temperature": 0.0,
+  "started": "2026-10-28 18:57:38",
+  "single": {
+    "count_100": {
+      "decode_tps_med": 51.0,
+      "ttft_med": 0.195,
+      "tokens_med": 288.5,
+      "thinking_leak_runs": 0,
+      "raw": [
+        {
+          "ttft": 0.3620007038116455,
+          "ttft_any": 0.3620007038116455,
+          "wall": 5.952385187149048,
+          "tokens": 302,
+          "reason_deltas": 0,
+          "decode_tps": 53.84245053218702
+        },
+        {
+          "ttft": 0.028122663497924805,
+          "ttft_any": 0.028122663497924805,
+          "wall": 5.727630376815796,
+          "tokens": 275,
+          "reason_deltas": 0,
+          "decode_tps": 48.07432743002563
+        }
+      ]
+    },
+    "count_300": {
+      "decode_tps_med": 59.0,
+      "ttft_med": 0.155,
+      "tokens_med": 971.5,
+      "thinking_leak_runs": 0,
+      "raw": [
+        {
+          "ttft": 0.2841012477874756,
+          "ttft_any": 0.2841012477874756,
+          "wall": 13.856014966964722,
+          "tokens": 791,
+          "reason_deltas": 0,
+          "decode_tps": 58.20844549606312
+        },
+        {
+          "ttft": 0.02675461769104004,
+          "ttft_any": 0.02675461769104004,
+          "wall": 19.28728461265564,
+          "tokens": 1152,
+          "reason_deltas": 0,
+          "decode_tps": 59.75951857508143
+        }
+      ]
+    },
+    "math": {
+      "decode_tps_med": 43.7,
+      "ttft_med": 0.205,
+      "tokens_med": 512.0,
+      "thinking_leak_runs": 0,
+      "raw": [
+        {
+          "ttft": 0.38336968421936035,
+          "ttft_any": 0.38336968421936035,
+          "wall": 12.214407444000244,
+          "tokens": 512,
+          "reason_deltas": 0,
+          "decode_tps": 43.19147739829916
+        },
+        {
+          "ttft": 0.027273893356323242,
+          "ttft_any": 0.027273893356323242,
+          "wall": 11.597183227539062,
+          "tokens": 512,
+          "reason_deltas": 0,
+          "decode_tps": 44.166292512792225
+        }
+      ]
+    },
+    "code": {
+      "decode_tps_med": 39.3,
+      "ttft_med": 0.185,
+      "tokens_med": 512.0,
+      "thinking_leak_runs": 0,
+      "raw": [
+        {
+          "ttft": 0.33895397186279297,
+          "ttft_any": 0.33895397186279297,
+          "wall": 12.92203402519226,
+          "tokens": 512,
+          "reason_deltas": 0,
+          "decode_tps": 40.61008893166741
+        },
+        {
+          "ttft": 0.03169894218444824,
+          "ttft_any": 0.03169894218444824,
+          "wall": 13.516835451126099,
+          "tokens": 512,
+          "reason_deltas": 0,
+          "decode_tps": 37.89357265024117
+        }
+      ]
+    },
+    "json": {
+      "decode_tps_med": 34.9,
+      "ttft_med": 0.172,
+      "tokens_med": 384.0,
+      "thinking_leak_runs": 0,
+      "raw": [
+        {
+          "ttft": 0.3128681182861328,
+          "ttft_any": 0.3128681182861328,
+          "wall": 11.488537311553955,
+          "tokens": 384,
+          "reason_deltas": 0,
+          "decode_tps": 34.27087840348009
+        },
+        {
+          "ttft": 0.0309145450592041,
+          "ttft_any": 0.0309145450592041,
+          "wall": 10.796384572982788,
+          "tokens": 384,
+          "reason_deltas": 0,
+          "decode_tps": 35.57670951724084
+        }
+      ]
+    },
+    "sql": {
+      "decode_tps_med": 38.5,
+      "ttft_med": 0.197,
+      "tokens_med": 384.0,
+      "thinking_leak_runs": 0,
+      "raw": [
+        {
+          "ttft": 0.36542820930480957,
+          "ttft_any": 0.36542820930480957,
+          "wall": 10.41416883468628,
+          "tokens": 384,
+          "reason_deltas": 0,
+          "decode_tps": 38.114228864919134
+        },
+        {
+          "ttft": 0.028441667556762695,
+          "ttft_any": 0.028441667556762695,
+          "wall": 9.86369252204895,
+          "tokens": 384,
+          "reason_deltas": 0,
+          "decode_tps": 38.94155885460382
+        }
+      ]
+    },
+    "tool": {
+      "decode_tps_med": 32.6,
+      "ttft_med": 0.21,
+      "tokens_med": 384.0,
+      "thinking_leak_runs": 0,
+      "raw": [
+        {
+          "ttft": 0.3908421993255615,
+          "ttft_any": 0.3908421993255615,
+          "wall": 11.552289962768555,
+          "tokens": 384,
+          "reason_deltas": 0,
+          "decode_tps": 34.31454486168336
+        },
+        {
+          "ttft": 0.028478384017944336,
+          "ttft_any": 0.028478384017944336,
+          "wall": 12.42501425743103,
+          "tokens": 384,
+          "reason_deltas": 0,
+          "decode_tps": 30.895727960697638
+        }
+      ]
+    },
+    "summary": {
+      "decode_tps_med": 35.4,
+      "ttft_med": 0.179,
+      "tokens_med": 384.0,
+      "thinking_leak_runs": 0,
+      "raw": [
+        {
+          "ttft": 0.32951927185058594,
+          "ttft_any": 0.32951927185058594,
+          "wall": 11.070292234420776,
+          "tokens": 384,
+          "reason_deltas": 0,
+          "decode_tps": 35.658513715418
+        },
+        {
+          "ttft": 0.029303789138793945,
+          "ttft_any": 0.029303789138793945,
+          "wall": 10.952347040176392,
+          "tokens": 384,
+          "reason_deltas": 0,
+          "decode_tps": 35.06348837020472
+        }
+      ]
+    },
+    "prose": {
+      "decode_tps_med": 32.8,
+      "ttft_med": 0.172,
+      "tokens_med": 384.0,
+      "thinking_leak_runs": 0,
+      "raw": [
+        {
+          "ttft": 0.3138399124145508,
+          "ttft_any": 0.3138399124145508,
+          "wall": 11.964953184127808,
+          "tokens": 384,
+          "reason_deltas": 0,
+          "decode_tps": 32.872395201053706
+        },
+        {
+          "ttft": 0.030395030975341797,
+          "ttft_any": 0.030395030975341797,
+          "wall": 11.733566045761108,
+          "tokens": 384,
+          "reason_deltas": 0,
+          "decode_tps": 32.726173061652986
+        }
+      ]
+    },
+    "narrative": {
+      "decode_tps_med": 28.1,
+      "ttft_med": 0.183,
+      "tokens_med": 384.0,
+      "thinking_leak_runs": 0,
+      "raw": [
+        {
+          "ttft": 0.3341405391693115,
+          "ttft_any": 0.3341405391693115,
+          "wall": 13.725346326828003,
+          "tokens": 384,
+          "reason_deltas": 0,
+          "decode_tps": 28.60085985333539
+        },
+        {
+          "ttft": 0.03171253204345703,
+          "ttft_any": 0.03171253204345703,
+          "wall": 13.874382257461548,
+          "tokens": 384,
+          "reason_deltas": 0,
+          "decode_tps": 27.668073254448192
+        }
+      ]
+    }
+  },
+  "single_wall_s": 235.0,
+  "concurrent": {
+    "streams": 4,
+    "secs": 120,
+    "requests": 18,
+    "failures": 0,
+    "tokens": 9235,
+    "wall": 139.5,
+    "aggregate_tps": 66.2,
+    "per_stream_tps": [
+      17.6,
+      18.4,
+      15.6,
+      14.7
+    ]
+  }
+}

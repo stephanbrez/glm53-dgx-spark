@@ -1,0 +1,107 @@
+[
+  {
+    "gate": "health",
+    "status": "PASS",
+    "detail": "server ready"
+  },
+  {
+    "gate": "tp_size",
+    "status": "PASS",
+    "detail": "tp_size=2 sglang=0.5.22"
+  },
+  {
+    "gate": "sanity/math_2plus2",
+    "status": "PASS",
+    "detail": "content_len=1 reasoning_len=199 fffd=0 want=4 content_head='4'"
+  },
+  {
+    "gate": "sanity/math_17x23",
+    "status": "PASS",
+    "detail": "content_len=3 reasoning_len=73 fffd=0 want=391 content_head='391'"
+  },
+  {
+    "gate": "sanity/fact_capital",
+    "status": "PASS",
+    "detail": "content_len=5 reasoning_len=127 fffd=0 want=paris content_head='Paris'"
+  },
+  {
+    "gate": "sanity/code",
+    "status": "PASS",
+    "detail": "content_len=0 reasoning_len=7891 fffd=0 want=None content_head=''"
+  },
+  {
+    "gate": "sanity/json",
+    "status": "PASS",
+    "detail": "content_len=46 reasoning_len=141 fffd=0 want=None content_head='```json\\n{\\n  \"name\": \"Alice\",\\n  \"age\": 30\\n}\\n```'"
+  },
+  {
+    "gate": "sanity/sql",
+    "status": "PASS",
+    "detail": "content_len=793 reasoning_len=2081 fffd=0 want=None content_head='```sql\\nSELECT customer_id, SUM(amount) AS total_spend\\nFROM o'"
+  },
+  {
+    "gate": "sanity/prose",
+    "status": "PASS",
+    "detail": "content_len=659 reasoning_len=1911 fffd=0 want=None content_head='Speculative decoding uses a small, fast \"draft\" model to gen'"
+  },
+  {
+    "gate": "sanity/korean_capital",
+    "status": "PASS",
+    "detail": "content_len=14 reasoning_len=314 fffd=0 want=seoul content_head='\ud55c\uad6d\uc758 \uc218\ub3c4\ub294 \uc11c\uc6b8\uc785\ub2c8\ub2e4.'"
+  },
+  {
+    "gate": "sanity/korean_translate",
+    "status": "PASS",
+    "detail": "content_len=279 reasoning_len=1057 fffd=0 want=None content_head='**\"When spring comes, flowers bloom in the mountains and fie'"
+  },
+  {
+    "gate": "sanity/korean_explain",
+    "status": "PASS",
+    "detail": "content_len=193 reasoning_len=1386 fffd=0 want=None content_head='\ud30c\uc774\uc36c\uc740 \ub3d9\uc801 \ud0c0\uc774\ud551\uacfc \uc778\ud130\ud504\ub9ac\ud130 \ubc29\uc2dd\uc73c\ub85c \uac04\uacb0\ud558\uace0 \uc77d\uae30 \uc26c\uc6b4 \ubb38\ubc95\uc744 \uc81c\uacf5\ud558\ub294 \ubc18\uba74, \uc790\ubc14\ub294 \uc815\uc801 \ud0c0\uc774\ud551\uc73c\ub85c'"
+  },
+  {
+    "gate": "corruption_ufffd",
+    "status": "PASS",
+    "detail": "U+FFFD count across all sanity outputs (content+reasoning): 0"
+  },
+  {
+    "gate": "hangul_probe",
+    "status": "PASS",
+    "detail": "U+FFFD over 2 passes x 3 Korean prompts: 0"
+  },
+  {
+    "gate": "determinism/math_17x23",
+    "status": "PASS",
+    "detail": "identical=True content_head='391'"
+  },
+  {
+    "gate": "determinism/prose",
+    "status": "PASS",
+    "detail": "identical=True content_head='Speculative decoding uses a small, fast '"
+  },
+  {
+    "gate": "logprobs",
+    "status": "PASS",
+    "detail": "n=24 min=-0.9593458771705627 max=-0.0018268815474584699"
+  },
+  {
+    "gate": "json_schema",
+    "status": "PASS",
+    "detail": "valid schema-constrained output, 3 items (from content=True)"
+  },
+  {
+    "gate": "reasoning_parser",
+    "status": "PASS",
+    "detail": "reasoning_len=2567 content_len=606 (thinking-always template)"
+  },
+  {
+    "gate": "tool_call_parser",
+    "status": "PASS",
+    "detail": "parsed_tool_calls=1 (WARN = answered without calling)"
+  },
+  {
+    "gate": "soak",
+    "status": "PASS",
+    "detail": "4 streams x 10.0min: completions=90 failures=0 thinking_budget_truncations=30 tokens=27553 wall=616s aggregate=44.8 tok/s per_stream=[11.7, 11.4, 11.5, 11.3]"
+  }
+]
