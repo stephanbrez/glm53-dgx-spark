@@ -44,30 +44,6 @@ Four patches on top of the pinned base (all in `patches/`):
    single-node; 1-GPU-per-node must use `rank % device_count`, else
    `torch.AcceleratorError: invalid device ordinal` on the worker.
 
-## Lessons learned
-
-1. **Device weights are charged as host RAM outside container accounting.**
-   ~95 GB/rank shows in host memory but in no container memcg, so
-   `--memory` caps are nearly meaningless here. Keep ~10 GB of the
-   121.8 GB free.
-2. **The default weight loader OOMs the host at end-of-load.** It stages
-   ~19% of the checkpoint (the bf16 attention / shared-expert part) on
-   top of the 95 GB of weights. `--load-format fastsafetensors` loads
-   GPU-direct: 95 GB in ~85 s, flat host footprint.
-3. **Desktop sessions are OOM bait.** GDM costs 4–8 GB and is the
-   preferred victim. `sudo systemctl stop gdm` on both nodes before
-   serving.
-4. **mem-fraction math:** weights+baseline = **0.824** of 124,544 MiB;
-   `--mem-fraction-static 0.87` leaves ~5.7 GB for KV + mamba pools
-   (fits 131K context). Steady host state ≈ 112 GB of 121.8.
-5. **Keep the default `--mamba-ssm-dtype`.** `bfloat16` breaks the KDA
-   prefill kernel on 0.5.22 (`kda_prefill_graph_track.py` cannot unify
-   bf16/fp32 in the `val` branch).
-6. **The chat template thinks always.** `ReasoningToggle
-   special_case='always'` — `chat_template_kwargs {"thinking": false}`
-   is ignored on this route. Budget 2048+ reasoning tokens for code
-   prompts, or parse `reasoning_content` and `content` separately.
-
 ## Launch (worker first)
 
 Both nodes source the shared `ENV`; scripts are worker-first:
@@ -121,6 +97,30 @@ Single-stream matches independent 2x-Spark measurements (14.5–14.7 tok/s)
 on this engine/nvfp4 route. Known headroom in this stack: fp8-KV tilelang
 path + mamba-concurrency tuning (~77–83 tok/s @ c8 reported on this
 hardware class).
+
+## Lessons learned
+
+1. **Device weights are charged as host RAM outside container accounting.**
+   ~95 GB/rank shows in host memory but in no container memcg, so
+   `--memory` caps are nearly meaningless here. Keep ~10 GB of the
+   121.8 GB free.
+2. **The default weight loader OOMs the host at end-of-load.** It stages
+   ~19% of the checkpoint (the bf16 attention / shared-expert part) on
+   top of the 95 GB of weights. `--load-format fastsafetensors` loads
+   GPU-direct: 95 GB in ~85 s, flat host footprint.
+3. **Desktop sessions are OOM bait.** GDM costs 4–8 GB and is the
+   preferred victim. `sudo systemctl stop gdm` on both nodes before
+   serving.
+4. **mem-fraction math:** weights+baseline = **0.824** of 124,544 MiB;
+   `--mem-fraction-static 0.87` leaves ~5.7 GB for KV + mamba pools
+   (fits 131K context). Steady host state ≈ 112 GB of 121.8.
+5. **Keep the default `--mamba-ssm-dtype`.** `bfloat16` breaks the KDA
+   prefill kernel on 0.5.22 (`kda_prefill_graph_track.py` cannot unify
+   bf16/fp32 in the `val` branch).
+6. **The chat template thinks always.** `ReasoningToggle
+   special_case='always'` — `chat_template_kwargs {"thinking": false}`
+   is ignored on this route. Budget 2048+ reasoning tokens for code
+   prompts, or parse `reasoning_content` and `content` separately.
 
 ## Repo layout
 
